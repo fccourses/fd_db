@@ -1,32 +1,30 @@
 DROP TABLE "users";
-
-
+/*
+ 1. CONSTRAINT: Full name не пустая строка 
+ 2. COLUMN: height domain? containts? 
+ */
 CREATE TABLE "users" (
   id serial PRIMARY KEY,
   first_name varchar(64) NOT NULL CHECK (first_name != ''),
   last_name varchar(64) NOT NULL CHECK (last_name != ''),
   email varchar(256) NOT NULL UNIQUE CHECK (email != ''),
-  birthday date NOT NULL ,
-  is_male boolean NOT NULL
-  CONSTRAINT "users_birthday_check" CHECK (birthday < current_date)
+  birthday date NOT NULL,
+  height numeric(3, 2) NOT NULL CHECK (
+    heght > 0.2
+    AND 
+    height < 2.7
+  ) is_male boolean NOT NULL,
+  CONSTRAINT "users_full_name_check" CHECK (
+    first_name != ''
+    AND last_name != ''
+  ),
+  CONSTRAINT "users_birthday_check" CHECK (
+    birthday < current_date
+    AND birthday > '1/1/1900'
+  )
 );
-
-
-DROP TABLE a;
-
-/* ПАРЫ ЧИСЕЛ b и c - уникальны. */
-CREATE TABLE A(
-  b int,
-  c int,
-  CONSTRAINT "U_B_C" UNIQUE(b, c)
-);
-
-
-INSERT INTO A
-VALUES (1, 1),
-  (2, 1);
-
-
+/* 
+ */
 INSERT INTO "users" (
     "first_name",
     "last_name",
@@ -73,6 +71,6 @@ VALUES (
     'Test',
     'Testovich',
     'test23@gmail.com',
-    '20/6/890',
+    '20/6/1990',
     true
   );
