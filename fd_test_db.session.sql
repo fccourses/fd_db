@@ -1,17 +1,44 @@
 DROP TABLE "users";
+
+
 CREATE TABLE "users" (
+  id serial PRIMARY KEY,
   first_name varchar(64) NOT NULL CHECK (first_name != ''),
   last_name varchar(64) NOT NULL CHECK (last_name != ''),
   email varchar(256) NOT NULL UNIQUE CHECK (email != ''),
-  birthday date NOT NULL CHECK (birthday < current_date),
+  birthday date NOT NULL ,
   is_male boolean NOT NULL
+  CONSTRAINT "users_birthday_check" CHECK (birthday < current_date)
 );
-INSERT INTO "users"
+
+
+DROP TABLE a;
+
+/* ПАРЫ ЧИСЕЛ b и c - уникальны. */
+CREATE TABLE A(
+  b int,
+  c int,
+  CONSTRAINT "U_B_C" UNIQUE(b, c)
+);
+
+
+INSERT INTO A
+VALUES (1, 1),
+  (2, 1);
+
+
+INSERT INTO "users" (
+    "first_name",
+    "last_name",
+    "email",
+    "birthday",
+    "is_male"
+  )
 VALUES (
     'Test',
     'Testovich',
     'test@gmail.com',
-    '20/6/2040',
+    '20/6/2000',
     true
   ),
   (
@@ -39,7 +66,7 @@ VALUES (
     'Test',
     'Testovich',
     'hahah',
-    '20/6/200023',
+    '20/6/2000',
     false
   ),
   (
@@ -49,30 +76,3 @@ VALUES (
     '20/6/890',
     true
   );
-/* 
- 
- Отношения - таблицы
- Атрибуты - столбцы таблицы
- Домены - множество допустимых значений
- Кортежи - строчка в таблице
- 
- SQL: 
- DDL - CREATE
- DML - INSERT, DELETE, UPDATE
- DCL - GRANT, REVOKE
- DQL - SELECT
- TCL - transaction
- 
- Command component "component";
- */
-DROP TABLE "messages";
-CREATE TABLE "messages"(
-  "id" bigserial PRIMARY KEY,
-  "body" varchar(5000) NOT NULL CHECK ("body" != ''),
-  "author" varchar(128) NOT NULL CHECK ("author" != ''),
-  "createdAt" timestamp NOT NULL DEFAULT current_timestamp
-);
-INSERT INTO "messages" ("author", "body")
-VALUES ('test testovich', 'test body 1'),
-  ('test testovich', 'test body 2'),
-  ('test testovich', 'test body 3');
