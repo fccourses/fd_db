@@ -9,3 +9,4 @@ CREATE TABLE teams(
 /*  */
 ALTER TABLE coach
 ADD COLUMN team_id int REFERENCES teams (id);
+/*  */
