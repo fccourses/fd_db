@@ -116,5 +116,31 @@ INSERT INTO "products_to_orders" ("order_id", "product_id", "quantity")
 VALUES (2, 2, 4),
   (2, 1, 1),
   (2, 3, 10);
-
-
+/*  */
+DROP TABLE "chats";
+/*  */
+CREATE TABLE "chats"(
+  id serial PRIMARY KEY,
+  owner_id int REFERENCES "users" ("id"),
+  chat_name varchar(64),
+  description varchar(100),
+  UNIQUE (chat_name, owner_id)
+);
+/*  */
+INSERT INTO "chats" ("owner_id", "chat_name", "description")
+VALUES (21, 'CANT', 'test');
+/*  */
+CREATE TABLE "users_to_chats"(
+  "chat_id" int REFERENCES "chats"("id"),
+  "user_id" int REFERENCES "users" ("id"),
+  PRIMARY KEY ("chat_id", "user_id")
+);
+/*  */
+CREATE TABLE "messages"(
+  "id" serial PRIMARY KEY,
+  "author_id" int,
+  "chat_id" int,
+  "body" text,
+  "created_at" timestamp NOT NULL DEFAULT current_timestamp,
+  FOREIGN KEY ("chat_id", "author_id") REFERENCES "users_to_chats"("chat_id", "user_id")
+);
