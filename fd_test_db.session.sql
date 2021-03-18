@@ -144,3 +144,31 @@ CREATE TABLE "messages"(
   "created_at" timestamp NOT NULL DEFAULT current_timestamp,
   FOREIGN KEY ("chat_id", "author_id") REFERENCES "users_to_chats"("chat_id", "user_id")
 );
+/*  */
+CREATE TABLE content(
+  "id" serial PRIMARY KEY,
+  "name" varchar(255) NOT NULL CHECK("name" != ''),
+  "author_id" int REFERENCES "users" ("id"),
+  "description" text,
+  "created_at" timestamp NOT NULL DEFAULT current_timestamp
+);
+/*  */
+INSERT INTO content ("name", "author_id")
+VALUES ('rtest 1', 4),
+  ('rtest 2', 4),
+  ('rtest 3', 4);
+/*  */
+CREATE TABLE "user_reactions"(
+  "content_id" int REFERENCES "content" ("id"),
+  "user_id" int REFERENCES "users" ("id"),
+  "is_liked" boolean,
+  "review" text CHECK ("review" != ''),
+  PRIMARY KEY ("content_id", "user_id")
+);
+/*  */
+INSERT INTO "user_reactions" ("content_id", "user_id", "is_liked")
+VALUES (2, 3, true),
+  (2, 6, false),
+  (2, 5, true),
+  (2, 4, false);
+/*  */
