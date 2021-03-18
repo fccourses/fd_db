@@ -1,0 +1,24 @@
+{
+  "name": "fd_db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fccourses/fd_db.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fccourses/fd_db/issues"
+  },
+  "homepage": "https://github.com/fccourses/fd_db#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "pg": "^8.5.1"
+  }
+}
